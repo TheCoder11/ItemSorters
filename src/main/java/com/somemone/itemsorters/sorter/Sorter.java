@@ -51,7 +51,10 @@ public class Sorter {
         }
         return true;
     }
-
+    
+    /*
+     * Removes item from sorter and container. Returns false if not found
+     */
     public boolean removeItem (ItemStack item) {
         if (itemCollections.containsKey(item.getType())) {
             SorterItemCollection itemCollection = itemCollections.get(item.getType());
@@ -64,6 +67,7 @@ public class Sorter {
                     sItem.getContainer().getInventory().remove(item);
                     flag = true;
                     trash = sItem;
+		    break;
                 }
             }
             if (flag) itemCollection.removeItem(trash);
@@ -72,13 +76,17 @@ public class Sorter {
         return true;
     }
 
-    public Container findNextEmptyContainer () {
+    /*
+     * Finds next container with empty slots. Returns Optional.empty() if sorter is full.
+     */
+
+    public Optional<Container> findNextEmptyContainer () {
         for (Container container : containers) {
             if (container.getInventory().getStorageContents().length != container.getInventory().getSize()) {
-                return container;
+                return Optional.of(container);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     public void addAccessor (UUID uuid) {
