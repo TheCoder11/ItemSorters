@@ -4,6 +4,8 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.somemone.itemsorters.ItemSorters;
 import com.somemone.itemsorters.sorter.Sorter;
+
+import org.bukkit.entity.Player;
 import org.junit.Test;
 
 import java.io.*;
