@@ -1,0 +1,5 @@
+name: ItemSorters
+version: '${project.version}'
+main: com.somemone.itemsorters.ItemSorters
+api-version: 1.17
+description: Sorts items, but with GUIS!
