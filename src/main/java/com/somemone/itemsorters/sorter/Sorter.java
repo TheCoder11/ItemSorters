@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
 
 public class Sorter {
@@ -77,16 +78,16 @@ public class Sorter {
     }
 
     /*
-     * Finds next container with empty slots. Returns Optional.empty() if sorter is full.
+     * Finds next container with empty slots. Returns null if sorter is full.
      */
 
-    public Optional<Container> findNextEmptyContainer () {
+    public Container findNextEmptyContainer () {
         for (Container container : containers) {
             if (container.getInventory().getStorageContents().length != container.getInventory().getSize()) {
-                return Optional.of(container);
+                return container;
             }
         }
-        return Optional.empty();
+        return null;
     }
 
     public void addAccessor (UUID uuid) {
