@@ -112,6 +112,10 @@ public class Sorter {
         containers.add(container);
     }
 
+    public void removeContainer (Container container) {
+        containers.remove(container);
+    }
+
     public UUID getOwner() {return owner;}
 
     public void getOwner(UUID uuid) {owner = uuid;}

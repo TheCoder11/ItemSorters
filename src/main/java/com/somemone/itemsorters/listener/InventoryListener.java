@@ -24,7 +24,6 @@ public class InventoryListener implements Listener {
     public void onInvClose (InventoryCloseEvent event) {
         if (ItemSorters.openInventories.containsKey(event.getPlayer())) {
             ItemSorters.openInventories.remove(event.getPlayer());
-            int rf = 0;
         }
     }
 

@@ -2,8 +2,11 @@ package com.somemone.itemsorters;
 
 import java.util.HashMap;
 
+import com.somemone.itemsorters.command.SorterCommand;
 import com.somemone.itemsorters.inventory.PlayerState;
 import com.somemone.itemsorters.inventory.SorterInventory;
+import com.somemone.itemsorters.listener.ClickListener;
+import com.somemone.itemsorters.listener.InventoryListener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,12 +19,9 @@ public final class ItemSorters extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        getServer().getPluginManager().registerEvents(new ClickListener(), this);
+        getServer().getPluginManager().registerEvents(new InventoryListener(), this);
 
-    }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+        getCommand("sorter").setExecutor(new SorterCommand());
     }
 }
