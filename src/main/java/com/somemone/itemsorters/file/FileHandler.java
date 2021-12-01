@@ -14,9 +14,11 @@ import java.util.UUID;
 public class FileHandler {
 
     public File resourceFile;
+    public File configFile;
 
     public FileHandler () {
-        resourceFile = new File(ItemSorters.getPlugin(ItemSorters.class).getDataFolder() + "groups.yml");
+        resourceFile = new File(ItemSorters.getPlugin(ItemSorters.class).getDataFolder() + "groups.json");
+        resourceFile = new File(ItemSorters.getPlugin(ItemSorters.class).getDataFolder() + "config.json");
     }
 
     public Optional<Sorter> getSorterFromPlayer (UUID player) {
@@ -29,6 +31,7 @@ public class FileHandler {
             BufferedReader reader = new BufferedReader(new FileReader(resourceFile));
 
             ArrayList<Sorter> results = gson.fromJson(reader, new TypeToken<ArrayList<Sorter>>(){}.getType());
+            reader.close();
 
             for (Sorter result : results) {
                 if (result.getOwner().equals(player) || result.isAccessor(player)) return Optional.of(result);
@@ -62,6 +65,40 @@ public class FileHandler {
             String result = gson.toJson(results);
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(resourceFile, true));
+            writer.write(result);
+            writer.close();
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public ConfigSettings getConfig() {
+      try {
+            if (!configFile.exists()) {
+                configFile.createNewFile();
+            }
+
+            Gson gson = new Gson();
+            BufferedReader reader = new BufferedReader(new FileReader(configFile));
+
+            ConfigSettings results = gson.fromJson(reader, ConfigSettings.class);
+            reader.close();
+            return results;
+
+        } catch (Exception e) {
+            return ConfigSettings.getDefault();
+        }
+    }
+
+    public boolean saveConfig(ConfigSettings settings) {
+      try {
+            Gson gson = new Gson();
+            gson.setPrettyPrinting(true);
+            String result = gson.toJson(settings);
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(configFile, true));
             writer.write(result);
             writer.close();
             return true;
