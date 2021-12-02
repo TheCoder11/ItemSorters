@@ -2,9 +2,11 @@ package com.somemone.itemsorters.inventory;
 
 import java.util.Optional;
 
+import com.somemone.itemsorters.ItemSorters;
 import com.somemone.itemsorters.file.FileHandler;
 import com.somemone.itemsorters.sorter.Sorter;
 
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
@@ -33,14 +35,12 @@ public enum PlayerState {
                 if (bigSorter.getContainers().contains(container)) {
                     player.sendMessage(Component.text("Container already in sorter!").color(NamedTextColor.RED));
                 } else {
-                    boolean result = ItemSorters.getEconomy().withdrawPlayer(player, ItemSorters.configs.getCost(sorter.getContainers().size()));
-                    if (result) {
-                      bigSorter.addContainer(container);
-                      handler.saveSorter(bigSorter);
-                      player.sendMessage(Component.text("Added container").color(NamedTextColor.GREEN));
-                    } else {
-                      player.sendMessage(Component.text("Insuffienct Funds").color(NamedTextColor.GREEN));
-                    }
+                    ItemSorters.getEconomy().withdrawPlayer(player, ItemSorters.configs.getCost(bigSorter.getContainers().size()));
+
+                    bigSorter.addContainer(container);
+                    handler.saveSorter(bigSorter);
+                    player.sendMessage(Component.text("Added container").color(NamedTextColor.GREEN));
+
                 }
             }
         }
@@ -75,17 +75,14 @@ public enum PlayerState {
             if (block.getType() != Material.CHEST && block.getType() != Material.BARREL) return;
             if (!player.hasPermission( "itemsorter.create" )) return;
 
-            boolean result = ItemSorters.getEconomy().withdrawPlayer(player, ItemSorters.configs.getCost(0));
-            
-            if (result) {
+            ItemSorters.getEconomy().withdrawPlayer(player, ItemSorters.configs.getCost(0));
+
               Container holder = (Container) block;
               Sorter sorter = new Sorter(player.getUniqueId(), holder);
               FileHandler handler = new FileHandler();
               handler.saveSorter(sorter);
               player.sendMessage(Component.text("Created Sorter").color(NamedTextColor.GREEN));
-            } else {
-              player.sendMessage(Component.text("Insuffienct Funds").color(NamedTextColor.GREEN));
-            }
+
         }
     };
 

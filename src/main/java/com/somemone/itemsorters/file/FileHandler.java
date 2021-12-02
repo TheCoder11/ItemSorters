@@ -3,6 +3,7 @@ package com.somemone.itemsorters.file;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.somemone.itemsorters.ItemSorters;
+import com.somemone.itemsorters.config.ConfigSettings;
 import com.somemone.itemsorters.sorter.Sorter;
 import org.junit.Test;
 
@@ -95,7 +96,7 @@ public class FileHandler {
     public boolean saveConfig(ConfigSettings settings) {
       try {
             Gson gson = new Gson();
-            gson.setPrettyPrinting(true);
+            gson = gson.newBuilder().setPrettyPrinting().create();
             String result = gson.toJson(settings);
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(configFile, true));

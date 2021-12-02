@@ -3,7 +3,7 @@ package com.somemone.itemsorters.config;
 public class ConfigSettings {
 
   public static ConfigSettings getDefault() {
-    return new Sorter(true, true, 500, 18);
+    return new ConfigSettings(true, true, 500, 18);
   }
 
 

@@ -5,12 +5,17 @@ import java.util.HashMap;
 // TODO: Add imports
 
 import com.somemone.itemsorters.command.SorterCommand;
+import com.somemone.itemsorters.config.ConfigSettings;
+import com.somemone.itemsorters.file.FileHandler;
 import com.somemone.itemsorters.inventory.PlayerState;
 import com.somemone.itemsorters.inventory.SorterInventory;
 import com.somemone.itemsorters.listener.ClickListener;
 import com.somemone.itemsorters.listener.InventoryListener;
 
+import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ItemSorters extends JavaPlugin {
@@ -21,12 +26,12 @@ public final class ItemSorters extends JavaPlugin {
 
     private static Economy economy;
 
-    private static ConfigSettings configs;
+    public static ConfigSettings configs;
 
     @Override
     public void onEnable() {
         if (!setupEconomy() ) {
-            log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            Bukkit.getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -48,8 +53,8 @@ public final class ItemSorters extends JavaPlugin {
         if (rsp == null) {
             return false;
         }
-        econ = rsp.getProvider();
-        return econ != null;
+        economy = rsp.getProvider();
+        return economy != null;
     }
 
     public static Economy getEconomy() {
