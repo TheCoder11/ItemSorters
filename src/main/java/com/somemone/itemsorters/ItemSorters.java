@@ -11,6 +11,7 @@ import com.somemone.itemsorters.inventory.PlayerState;
 import com.somemone.itemsorters.inventory.SorterInventory;
 import com.somemone.itemsorters.listener.ClickListener;
 import com.somemone.itemsorters.listener.InventoryListener;
+import com.somemone.itemsorters.sorter.ActiveInvite;
 
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -21,6 +22,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class ItemSorters extends JavaPlugin {
 
     public static HashMap<Player, PlayerState> playerStates = new HashMap<>();
+
+    public static ArrayList<ActiveInvite> activeInvites = new ArrayList<>();
 
     public static HashMap<Player, SorterInventory> openInventories = new HashMap<>();
 
